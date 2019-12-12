@@ -7,7 +7,7 @@ services:
             - chrome
             - firefox
         volumes:
-            - ./test:/test
+            - /test:/test
 
     hub:
         image: selenium/hub
