@@ -1,0 +1,9 @@
+FROM node:laste
+
+RUN mkdir test
+
+COPY ./ /2E2
+
+WORKDIR /2E2
+
+RUN npm install

@@ -1,36 +1,35 @@
-version: "2"
+version: "3"
 services:
-  test:
-    container_name: test
+  webdriverio:
+    image: "allthings/wdio"
     build: .
-    ports:
-      - "3000:3000"
     depends_on:
       - firefox
       - chrome
-    volumes:
-      - ./test:/test
-      - ./package.json:/package.json
-      - ./package-lock.json:/package-lock.json
+      - hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    command: npm test
 
   firefox:
-    image: selenium/node-firefox:3.12.0-americium
-    shm_size: 2g
+    image: selenium/node-firefox
     depends_on:
       - hub
     environment:
-      HUB_HOST: hub
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
 
   chrome:
-    image: selenium/node-chrome:3.12.0-americium
-    shm_size: 2g
+    image: selenium/node-chrome
     depends_on:
       - hub
     environment:
-      HUB_HOST: hub
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
 
   hub:
     container_name: hub
-    image: selenium/hub:3.12.0-americium
+    image: selenium/hub
     ports:
       - "4444:4444"

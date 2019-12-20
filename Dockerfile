@@ -1,15 +1,28 @@
-FROM node:8.9-alpine
+FROM node:9.4.0
 
-ENV NODE_PATH /install/node_modules/
-ENV PATH /install/node_modules/.bin:$PATH
+RUN npm install -g \
+    npm@latest \
+  # Clean up obsolete files:
+  && rm -rf \
+    /tmp/* \
+    /root/.npm
 
-COPY package.json /install/package.json
-WORKDIR /install/
-RUN apk --no-cache add --virtual native-deps \
-  g++ gcc libgcc libstdc++ linux-headers make python && \
-  npm install --quiet node-gyp -g &&\
-  npm install --quiet && \
-  apk del native-deps g++ gcc linux-headers make python 
+WORKDIR /usr/lib/wdio
+COPY package.json package-lock.json ./
+RUN npm install \
+  # Clean up obsolete files:
+  && rm -rf \
+    /tmp/* \
+    /root/.npm
 
-VOLUME /test
-WORKDIR /test
+RUN mkdir test
+
+COPY ./test /test
+# Set NODE_PATH to be able to require installed packages:
+#ENV NODE_PATH=/usr/lib/wdio/node_modules
+# Extend path to be able to run installed binaries:
+#ENV PATH=$PATH:/usr/lib/wdio/node_modules/.bin
+
+# Avoid permission issues with host mounts by assigning a user/group with
+# uid/gid 1000 (usually the ID of the first user account on GNU/Linux):
+#RUN adduser -D -u 1000 wdio
