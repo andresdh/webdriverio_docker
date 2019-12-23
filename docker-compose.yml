@@ -2,6 +2,7 @@ version: "3"
 services:
   webdriverio:
     container_name: wdio
+    image: wdio_image
     build: .
     depends_on:
       - firefox
