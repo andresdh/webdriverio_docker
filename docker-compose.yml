@@ -1,32 +1,33 @@
 version: "3"
 services:
   webdriverio:
-    image: "allthings/wdio"
+    container_name: wdio
     build: .
     depends_on:
       - firefox
       - chrome
       - hub
-    environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
-    command: npm test
+    volumes:
+      - ./:/wdio
+    command: npm run test 
 
   firefox:
+    container_name: firefox
     image: selenium/node-firefox
     depends_on:
       - hub
     environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
+      - HUB_HOST=hub
+      - HUB_PORT=4444
 
   chrome:
+    container_name: chrome
     image: selenium/node-chrome
     depends_on:
       - hub
     environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
+      - HUB_HOST=hub
+      - HUB_PORT=4444
 
   hub:
     container_name: hub
