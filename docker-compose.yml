@@ -8,9 +8,13 @@ services:
       - firefox
       - chrome
       - hub
-    volumes:
-      - ./:/wdio
-    command: npm run test 
+    
+    command: >
+          bash -c "./wait-for-it.sh --timeout=0 hub:4444 
+          && ./wait-for-it.sh --timeout=0 firefox:5555
+          && ./wait-for-it.sh --timeout=0 chrome:5555
+          && npm run test
+          "
 
   firefox:
     container_name: firefox
@@ -20,6 +24,8 @@ services:
     environment:
       - HUB_HOST=hub
       - HUB_PORT=4444
+    ports:
+      - 5555
 
   chrome:
     container_name: chrome
@@ -29,6 +35,8 @@ services:
     environment:
       - HUB_HOST=hub
       - HUB_PORT=4444
+    ports:
+      - 5555
 
   hub:
     container_name: hub
