@@ -8,13 +8,13 @@ services:
       - firefox
       - chrome
       - hub
-    
-    command: >
-          bash -c "./wait-for-it.sh --timeout=0 hub:4444 
-          && ./wait-for-it.sh --timeout=0 firefox:5555
-          && ./wait-for-it.sh --timeout=0 chrome:5555
-          && npm run test
-          "
+    command:
+          bash -c "./wait-for-it.sh --timeout=0 hub:4444 && 
+          ./wait-for-it.sh --timeout=0 firefox:5555 && 
+          ./wait-for-it.sh --timeout=0 chrome:5555 && 
+          npm run test"
+    expose: 
+      - 5500
 
   firefox:
     container_name: firefox

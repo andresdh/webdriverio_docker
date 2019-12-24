@@ -11,10 +11,10 @@ exports.config = {
         // 'path/to/excluded/files'
     ],
     maxInstances: 1,
-    capabilities: [{
-        maxInstances: 5,
-        browserName: 'chrome',
-    }],
+    capabilities: [
+        {browserName: 'chrome'},
+        {browserName: 'firefox'}
+    ],
     logLevel: 'error',
     bail: 0,
     baseUrl: 'hub',
@@ -27,7 +27,12 @@ exports.config = {
     
     framework: 'mocha',
     //
-    reporters: ['spec'],
+    reporters: ['spec',
+               ['allure', {
+        outputDir: './test/reports/allure-results/',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: true,
+    }]],
  
     //
     // Options to be passed to Mocha.
