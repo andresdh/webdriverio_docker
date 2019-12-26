@@ -1,8 +1,7 @@
 version: "3"
 services:
-  webdriverio:
+  wdio:
     container_name: wdio
-    image: wdio_image
     build: .
     depends_on:
       - firefox
@@ -13,8 +12,6 @@ services:
           ./wait-for-it.sh --timeout=0 firefox:5555 && 
           ./wait-for-it.sh --timeout=0 chrome:5555 && 
           npm run test"
-    expose: 
-      - 5500
 
   firefox:
     container_name: firefox
@@ -25,7 +22,7 @@ services:
       - HUB_HOST=hub
       - HUB_PORT=4444
     ports:
-      - 5555
+      - "5555"
 
   chrome:
     container_name: chrome
@@ -36,10 +33,21 @@ services:
       - HUB_HOST=hub
       - HUB_PORT=4444
     ports:
-      - 5555
+      - "5555"
 
   hub:
     container_name: hub
     image: selenium/hub
     ports:
       - "4444:4444"
+
+  allure:
+    image: "frankescobar/allure-docker-service"
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: "TRUE"
+    ports:
+      - "4040:4040"
+      - "5050:5050"
+    volumes: 
+      - ./allure-report:/app/allure-results

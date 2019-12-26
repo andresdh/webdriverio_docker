@@ -8,7 +8,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0 && ./node_modules/.bin/allure generate ./test/reports/allure-results"
+    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0 && ./node_modules/.bin/allure generate --clean ./test/reports/allure-results",
+    "allure_serve" : "docker cp wdio:./test/reports/allure-results allure:/app/allure-results"
   },
   "author": "",
   "license": "ISC",
