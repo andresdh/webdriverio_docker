@@ -11,7 +11,7 @@ resultsDirectory = currentDirectory + allureResultsDirectory
 print('RESULTS DIRECTORY PATH: ' + resultsDirectory)
 
 files = os.listdir(resultsDirectory)
-
+print(files)
 print('FILES:')
 results = []
 for file in files:
@@ -40,12 +40,13 @@ headers = {'Content-type': 'application/json'}
 requestBody = {
     "results": results
 }
+print(requestBody)
 jsonRequestBody = json.dumps(requestBody)
-
+print(jsonRequestBody)
 response = requests.post(allureServer + '/send-results', headers=headers, data=jsonRequestBody)
 print("RESPONSE:")
 jsonResponseBody = json.loads(response.content)
 jsonPrettierResponseBody = json.dumps(jsonResponseBody, indent=4, sort_keys=True)
-print(jsonPrettierResponseBody)
+print(response.content)
 print("STATUS CODE:")
 print(response.status_code)

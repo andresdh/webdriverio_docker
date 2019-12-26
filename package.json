@@ -8,8 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0 && ./node_modules/.bin/allure generate --clean ./test/reports/allure-results",
-    "allure_serve" : "docker cp wdio:./test/reports/allure-results allure:/app/allure-results"
+    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0 && ./node_modules/.bin/allure generate --clean ./test/reports/allure-results && node send_post_allure.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +21,7 @@
     "@wdio/spec-reporter": "^5.16.11",
     "@wdio/sync": "^5.16.15",
     "allure-commandline": "^2.13.0",
+    "axios": "^0.19.0",
     "chromedriver": "^79.0.0",
     "wdio-chromedriver-service": "^5.0.2"
   }
