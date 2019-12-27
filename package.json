@@ -8,7 +8,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0 && ./node_modules/.bin/allure generate --clean ./test/reports/allure-results && node send_post_allure.js"
+    "test": "./node_modules/.bin/wdio ./test/wdio.conf.js  || exit 0",
+    "allure": "./node_modules/.bin/allure generate --clean ./test/reports/allure-results",
+    "post_allure": "node send_post_allure.js"
   },
   "author": "",
   "license": "ISC",

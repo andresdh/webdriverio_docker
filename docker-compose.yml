@@ -12,7 +12,9 @@ services:
           bash -c "./wait-for-it.sh --timeout=0 hub:4444 && 
           ./wait-for-it.sh --timeout=0 firefox:5555 && 
           ./wait-for-it.sh --timeout=0 chrome:5555 && 
-          npm run test"
+          npm run test &&
+          npm run allure &&
+          npm run post_allure"
 
   firefox:
     container_name: firefox
